@@ -58,8 +58,6 @@ class _SignupScreenState extends State<SignupScreen> {
       file: _image!,
     );
 
-    print(res);
-
     setState(() {
       _isLoading = false;
     });

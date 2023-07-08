@@ -39,9 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
       password: _passwordController.text,
     );
 
-    print(_emailController.text);
-    print(_passwordController.text);
-
     if (res == 'success') {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
