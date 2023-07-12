@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class User {
   final String email;
@@ -9,6 +8,8 @@ class User {
   final String bio;
   final List followers;
   final List following;
+  final bool isOnline;
+  final DateTime lastActive;
 
   const User({
     required this.email,
@@ -18,6 +19,8 @@ class User {
     required this.bio,
     required this.followers,
     required this.following,
+    required this.isOnline,
+    required this.lastActive,
   });
 
   Map<String, dynamic> toJson() => {
@@ -28,10 +31,15 @@ class User {
         'followers': followers,
         'following': following,
         'photoUrl': photoUrl,
+        'isOnline': isOnline,
+        'lastActive': lastActive,
       };
 
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
+
+    Timestamp lastActiveTimestamp = snapshot["lastActive"];
+    DateTime lastActive = lastActiveTimestamp.toDate();
 
     return User(
       username: snapshot['username'],
@@ -41,6 +49,8 @@ class User {
       bio: snapshot['bio'],
       followers: snapshot['followers'],
       following: snapshot['following'],
+      isOnline: snapshot['isOnline'],
+      lastActive: lastActive,
     );
   }
 }

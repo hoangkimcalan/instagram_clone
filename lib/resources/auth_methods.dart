@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/models/user.dart' as model;
+import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
+import 'package:provider/provider.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -50,9 +52,11 @@ class AuthMethods {
           followers: [],
           following: [],
           photoUrl: photoUrl,
+          isOnline: true,
+          lastActive: DateTime.now(),
         );
 
-        await _firebase.collection('users').doc(cred.user!.uid).set(
+        _firebase.collection('users').doc(cred.user!.uid).set(
               user.toJson(),
             );
         res = 'success';
@@ -87,14 +91,10 @@ class AuthMethods {
     return res;
   }
 
-  Future<String> signOutUser() async {
-    String res = "Some error occurred";
-    try {
-      await _auth.signOut();
-      res = 'success';
-    } catch (e) {
-      return e.toString();
-    }
-    return res;
+  Future<void> signOutUser(String uid) async {
+    _firebase.collection('users').doc(uid).update({
+      'isOnline': false,
+    });
+    await _auth.signOut();
   }
 }
