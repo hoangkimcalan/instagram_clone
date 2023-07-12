@@ -55,12 +55,9 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           onFieldSubmitted: (String _) {
-            print(_);
-            print(_searchController.text);
             setState(() {
               isShowUser = true;
             });
-            print(isShowUser);
           },
         ),
       ),

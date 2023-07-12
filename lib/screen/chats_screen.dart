@@ -57,12 +57,9 @@ class _ChatScreensState extends State<ChatScreens> {
                       hintText: 'Enter username...',
                     ),
                     onFieldSubmitted: (String _) {
-                      print(_);
-                      print(_searchController.text);
                       setState(() {
                         _isSearching = true;
                       });
-                      print(_isSearching);
                     },
                     autofocus: true,
                     onTapOutside: (event) {
