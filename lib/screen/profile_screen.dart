@@ -38,11 +38,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isLoading = true;
       uid = widget.uid;
     });
-    print("____");
-    print(FirebaseAuth.instance.currentUser!.uid);
-    print("____");
-    print(uid);
-    print("____");
 
     try {
       var userSnap = await FirebaseFirestore.instance
@@ -58,9 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       postLen = postSnap.docs.length;
       userData = userSnap.data()!;
-      print("____");
-      print(userData['username']);
-      print("____");
       followers = userSnap.data()!['followers'].length;
       following = userSnap.data()!['following'].length;
       isFollowing = userSnap
@@ -225,7 +217,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('posts')
-                      .where('uid', isEqualTo: widget.uid)
+                      .where('uid',
+                          isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                       .get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

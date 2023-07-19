@@ -100,13 +100,14 @@ class _ChatScreensState extends State<ChatScreens> {
               }
 
               return ListView.builder(
-                  itemCount: (snapshot.data! as dynamic).docs.length,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return UserChat(
-                      snap: snapshot.data!.docs[index].data(),
-                    );
-                  });
+                itemCount: (snapshot.data! as dynamic).docs.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return UserChat(
+                    snap: snapshot.data!.docs[index].data(),
+                  );
+                },
+              );
             },
           ),
         ),

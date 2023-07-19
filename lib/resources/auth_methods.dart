@@ -21,6 +21,8 @@ class AuthMethods {
     return model.User.fromSnap(snap);
   }
 
+  String getUserId = FirebaseAuth.instance.currentUser!.uid;
+
   Future<String> signUpUser({
     required String email,
     required String password,
