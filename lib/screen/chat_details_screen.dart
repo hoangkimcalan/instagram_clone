@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/models/message.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 
 import '../widgets/message_card.dart';
@@ -24,11 +25,13 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_messageController.text);
-    print("___");
-    print("XX");
-    print("___");
-    print(AuthMethods().getUserId);
+    print('_____');
+    print(AuthMethods().getUserId());
+    print('_____');
+    print('YYYYYYY');
+    print(widget.snap['uid']);
+    print('YYYYYYY');
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -41,42 +44,24 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
           children: [
             Expanded(
               child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('chats/${AuthMethods().getUserId}/messages')
-                    .snapshots(),
+                stream: FirestoreMethods().getAllMessages(widget.snap['uid']),
                 builder: (context, snapshot) {
+                  if (snapshot.hasError) print('error');
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    final data = (snapshot.data! as dynamic).docs;
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    final data = snapshot.data?.docs;
                     _list =
-                        data?.map((e) => Message.fromSnap(e.data())).toList() ??
+                        data?.map((e) => Message.fromJson(e.data())).toList() ??
                             [];
                   }
-                  _list.clear();
-                  _list.add(Message(
-                    toId: 'id1',
-                    fromId: 'id2',
-                    msg: 'Hii',
-                    sendDate: DateTime.now(),
-                    readDate: DateTime.now(),
-                    type: Type.text,
-                  ));
-
-                  _list.add(Message(
-                    toId: 'id2',
-                    fromId: 'BgKbDWa7zXVuTHf89wYcaje2ajy2',
-                    msg: 'Hello',
-                    sendDate: DateTime.now(),
-                    readDate: DateTime.now(),
-                    type: Type.text,
-                  ));
 
                   if (_list.isNotEmpty) {
                     return ListView.builder(
+                      reverse: true,
                       itemCount: _list.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
@@ -118,15 +103,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
                       onChanged: (value) {
-                        if (value != '') {
-                          setState(() {
-                            _isTyping = true;
-                          });
-                        } else {
-                          setState(() {
-                            _isTyping = false;
-                          });
-                        }
+                        setState(() {
+                          _isTyping = value.isNotEmpty;
+                        });
                       },
                       decoration: const InputDecoration(
                         hintText: 'Type something...',
@@ -159,9 +138,13 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         )
                       : MaterialButton(
                           onPressed: () {
-                            setState(() {
-                              _messageController.text = "";
-                            });
+                            if (_messageController.text.isNotEmpty) {
+                              FirestoreMethods().sendMessage(
+                                  widget.snap['uid'], _messageController.text);
+                              setState(() {
+                                _messageController.text = "";
+                              });
+                            }
                           },
                           child: const Text(
                             'Send',

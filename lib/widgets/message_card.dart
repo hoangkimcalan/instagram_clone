@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/helper/my_date_utils.dart';
 import 'package:instagram_clone/models/message.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:intl/intl.dart';
 
 class MessageCard extends StatefulWidget {
@@ -15,7 +17,10 @@ class MessageCard extends StatefulWidget {
 class _MessageCardState extends State<MessageCard> {
   @override
   Widget build(BuildContext context) {
+    print("CCCCC");
+    print(widget.message.fromId);
     print(FirebaseAuth.instance.currentUser!.uid);
+    print(AuthMethods().getUserId());
     return FirebaseAuth.instance.currentUser!.uid == widget.message.fromId
         ? _blueMessage()
         : _greyMessage();
@@ -37,7 +42,8 @@ class _MessageCardState extends State<MessageCard> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                DateFormat.yMMMd().format(widget.message.sendDate),
+                MyDateUtil.getFormattedTime(
+                    context: context, time: widget.message.sentDate),
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -95,7 +101,8 @@ class _MessageCardState extends State<MessageCard> {
         Padding(
           padding: const EdgeInsets.only(right: 10),
           child: Text(
-            DateFormat.yMMMd().format(widget.message.sendDate),
+            MyDateUtil.getFormattedTime(
+                context: context, time: widget.message.sentDate),
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,

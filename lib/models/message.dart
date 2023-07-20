@@ -1,42 +1,38 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Message {
-  final String toId;
-  final String fromId;
-  final String msg;
-  final DateTime sendDate;
-  final DateTime readDate;
-  final Type type;
-
-  const Message({
+  Message({
     required this.toId,
     required this.fromId,
     required this.msg,
-    required this.sendDate,
-    required this.readDate,
+    this.readDate,
     required this.type,
+    required this.sentDate,
   });
 
-  Map<String, dynamic> toJson() => {
-        'toId': toId,
-        'fromId': fromId,
-        'msg': msg,
-        'sendDate': sendDate,
-        'readDate': readDate,
-        'type': type,
-      };
+  late final String toId;
+  late final String fromId;
+  late final String msg;
+  late final String? readDate;
+  late final String sentDate;
+  late final String type;
 
-  static Message fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  Message.fromJson(Map<String, dynamic> json) {
+    toId = json['toId'].toString();
+    msg = json['msg'].toString();
+    readDate = json['readDate'].toString();
+    type = json['type'].toString();
+    fromId = json['fromId'].toString();
+    sentDate = json['sentDate'].toString();
+  }
 
-    return Message(
-      toId: snapshot['toId'],
-      fromId: snapshot['fromId'],
-      msg: snapshot['msg'],
-      sendDate: snapshot['sendDate'],
-      readDate: snapshot['readDate'],
-      type: snapshot['type'],
-    );
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['toId'] = toId;
+    data['fromId'] = fromId;
+    data['msg'] = msg;
+    data['readDate'] = readDate;
+    data['type'] = type;
+    data['sentDate'] = sentDate;
+    return data;
   }
 }
 

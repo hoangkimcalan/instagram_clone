@@ -34,6 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getData() async {
+    print("____");
+    print(widget.uid);
     setState(() {
       isLoading = true;
       uid = widget.uid;
@@ -48,7 +50,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // get post lENGTH
       var postSnap = await FirebaseFirestore.instance
           .collection('posts')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('uid',
+              isEqualTo: uid != "NOT_OWN"
+                  ? uid
+                  : FirebaseAuth.instance.currentUser!.uid)
           .get();
 
       postLen = postSnap.docs.length;
@@ -117,7 +122,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    "NOT_OWN" == widget.uid
+                                    ("NOT_OWN" == widget.uid ||
+                                            widget.uid ==
+                                                AuthMethods().getUserId())
                                         ? FollowButton(
                                             text: 'Sign Out',
                                             backgroundColor:
@@ -218,7 +225,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   future: FirebaseFirestore.instance
                       .collection('posts')
                       .where('uid',
-                          isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                          isEqualTo: uid != "NOT_OWN"
+                              ? uid
+                              : FirebaseAuth.instance.currentUser!.uid)
                       .get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

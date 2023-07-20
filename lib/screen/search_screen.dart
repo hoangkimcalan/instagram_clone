@@ -73,11 +73,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
                 return (snapshot.data! as dynamic).docs.length != 0
                     ? ListView.builder(
                         itemCount: (snapshot.data! as dynamic).docs.length,
                         itemBuilder: (context, index) {
+                          print("XXXX");
+                          print((snapshot.data! as dynamic).docs[index]['uid']);
                           return InkWell(
                             onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(

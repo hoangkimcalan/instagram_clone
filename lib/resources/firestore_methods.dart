@@ -2,9 +2,12 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_clone/models/post.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
 import 'package:instagram_clone/utils/global_variables.dart';
 import 'package:uuid/uuid.dart';
+import 'package:instagram_clone/models/user.dart' as model;
+import 'package:instagram_clone/models/message.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -148,5 +151,35 @@ class FirestoreMethods {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  String getConversation(String id) =>
+      AuthMethods().getUserId().hashCode <= id.hashCode
+          ? '${AuthMethods().getUserId()}_$id'
+          : '${id}_${AuthMethods().getUserId()}';
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessages(
+      String userChatId) {
+    return _firestore
+        .collection('chats/${getConversation(userChatId)}/messages/')
+        .orderBy('sentDate', descending: true)
+        .snapshots();
+  }
+
+  //MESSAGE
+  Future<void> sendMessage(String userChatId, String msg) async {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+    final Message message = Message(
+      toId: userChatId,
+      fromId: AuthMethods().getUserId(),
+      msg: msg,
+      sentDate: time,
+      type: 'text',
+    );
+
+    await _firestore
+        .collection('chats/${getConversation(userChatId)}/messages/')
+        .doc(time)
+        .set(message.toJson());
   }
 }
