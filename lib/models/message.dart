@@ -3,7 +3,7 @@ class Message {
     required this.toId,
     required this.fromId,
     required this.msg,
-    this.readDate,
+    required this.readDate,
     required this.type,
     required this.sentDate,
   });
@@ -11,7 +11,7 @@ class Message {
   late final String toId;
   late final String fromId;
   late final String msg;
-  late final String? readDate;
+  late final String readDate;
   late final String sentDate;
   late final String type;
 

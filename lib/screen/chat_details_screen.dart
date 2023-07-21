@@ -25,13 +25,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('_____');
-    print(AuthMethods().getUserId());
-    print('_____');
-    print('YYYYYYY');
-    print(widget.snap['uid']);
-    print('YYYYYYY');
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

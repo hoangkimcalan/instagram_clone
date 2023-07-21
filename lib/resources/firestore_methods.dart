@@ -175,11 +175,27 @@ class FirestoreMethods {
       msg: msg,
       sentDate: time,
       type: 'text',
+      readDate: '',
     );
 
     await _firestore
         .collection('chats/${getConversation(userChatId)}/messages/')
         .doc(time)
         .set(message.toJson());
+  }
+
+  Future<void> updateMessageReadStatus(Message message) async {
+    await _firestore
+        .collection('chats/${getConversation(message.fromId)}/messages/')
+        .doc(message.sentDate)
+        .update({'readDate': DateTime.now().millisecondsSinceEpoch.toString()});
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessage(String userId) {
+    return _firestore
+        .collection('chats/${getConversation(userId)}/messages/')
+        .orderBy('sentDate', descending: true)
+        .limit(1)
+        .snapshots();
   }
 }

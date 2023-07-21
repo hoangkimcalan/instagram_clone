@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/helper/my_date_utils.dart';
 import 'package:instagram_clone/models/message.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:intl/intl.dart';
 
 class MessageCard extends StatefulWidget {
@@ -17,10 +19,6 @@ class MessageCard extends StatefulWidget {
 class _MessageCardState extends State<MessageCard> {
   @override
   Widget build(BuildContext context) {
-    print("CCCCC");
-    print(widget.message.fromId);
-    print(FirebaseAuth.instance.currentUser!.uid);
-    print(AuthMethods().getUserId());
     return FirebaseAuth.instance.currentUser!.uid == widget.message.fromId
         ? _blueMessage()
         : _greyMessage();
@@ -35,10 +33,11 @@ class _MessageCardState extends State<MessageCard> {
             const SizedBox(
               width: 16,
             ),
-            const Icon(
-              Icons.done_all_rounded,
-              color: Colors.blue,
-            ),
+            if (widget.message.readDate.isNotEmpty)
+              const Icon(
+                Icons.done_all_rounded,
+                color: Colors.blue,
+              ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
@@ -76,6 +75,10 @@ class _MessageCardState extends State<MessageCard> {
   }
 
   Widget _greyMessage() {
+    if (widget.message.readDate.isEmpty) {
+      FirestoreMethods().updateMessageReadStatus(widget.message);
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
