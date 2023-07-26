@@ -49,7 +49,6 @@ class _UserChatState extends State<UserChat> {
                   data?.map((e) => Message.fromJson(e.data())).toList() ?? [];
 
               if (_list.isNotEmpty) {
-                print('XXX');
                 _message = _list[0];
               }
             }
@@ -60,7 +59,11 @@ class _UserChatState extends State<UserChat> {
               ),
               title: Text(widget.snap['username']),
               subtitle: Text(
-                _message != null ? _message!.msg : widget.snap['bio'],
+                _message != null
+                    ? (_message!.type == 'text'
+                        ? _message!.msg
+                        : '${widget.snap['username']} send image')
+                    : widget.snap['bio'],
                 maxLines: 1,
               ),
               trailing: _message == null

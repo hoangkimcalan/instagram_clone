@@ -1,11 +1,19 @@
+import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/models/message.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:instagram_clone/utils/utils.dart';
 
 import '../widgets/message_card.dart';
 
@@ -17,141 +25,229 @@ class ChatDetailsScreen extends StatefulWidget {
   State<ChatDetailsScreen> createState() => _ChatDetailsScreenState();
 }
 
-final TextEditingController _messageController = TextEditingController();
-
 class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
-  bool _isTyping = false;
+  final TextEditingController _messageController = TextEditingController();
+  bool _isShowEmoji = false;
   List<Message> _list = [];
+  Uint8List? _file;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: mobileBackgroundColor,
-          centerTitle: false,
-          automaticallyImplyLeading: false,
-          flexibleSpace: _appBar(),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: StreamBuilder(
-                stream: FirestoreMethods().getAllMessages(widget.snap['uid']),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) print('error');
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    final data = snapshot.data?.docs;
-                    _list =
-                        data?.map((e) => Message.fromJson(e.data())).toList() ??
-                            [];
-                  }
-
-                  if (_list.isNotEmpty) {
-                    return ListView.builder(
-                      reverse: true,
-                      itemCount: _list.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return MessageCard(message: _list[index]);
-                      },
-                    );
-                  } else {
-                    return const Center(
-                      child: Text(
-                        'Say Hi! 👋',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    );
-                  }
-                },
-              ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: SafeArea(
+        child: WillPopScope(
+          onWillPop: () {
+            if (_isShowEmoji) {
+              setState(() {
+                _isShowEmoji = !_isShowEmoji;
+              });
+              return Future.value(false);
+            } else {
+              return Future.value(true);
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: mobileBackgroundColor,
+              centerTitle: false,
+              automaticallyImplyLeading: false,
+              flexibleSpace: _appBar(),
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.emoji_emotions_outlined,
-                      size: 28,
-                    ),
-                    onPressed: () {},
+            body: Column(
+              children: [
+                Expanded(
+                  child: StreamBuilder(
+                    stream:
+                        FirestoreMethods().getAllMessages(widget.snap['uid']),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) print('error');
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        final data = snapshot.data?.docs;
+                        _list = data
+                                ?.map((e) => Message.fromJson(e.data()))
+                                .toList() ??
+                            [];
+                      }
+
+                      if (_list.isNotEmpty) {
+                        return ListView.builder(
+                          reverse: true,
+                          itemCount: _list.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return MessageCard(message: _list[index]);
+                          },
+                        );
+                      } else {
+                        return const Center(
+                          child: Text(
+                            'Say Hi! 👋',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _messageController,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      autofocus: true,
-                      onTapOutside: (event) {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _isTyping = value.isNotEmpty;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        hintText: 'Type something...',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                        ),
-                        border: InputBorder.none,
+                ),
+                if (_isLoading)
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
                       ),
                     ),
                   ),
-                  _isTyping == false
-                      ? Row(
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.emoji_emotions_outlined,
+                                size: 28,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  FocusScope.of(context).unfocus();
+                                  _isShowEmoji = !_isShowEmoji;
+                                });
+                              },
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _messageController,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                autofocus: true,
+                                onTapOutside: (event) {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                },
+                                onTap: () {
+                                  setState(() => _isShowEmoji = !_isShowEmoji);
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: 'Type something...',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                  ),
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
                             IconButton(
                               icon: const Icon(
                                 Icons.image_outlined,
                                 size: 28,
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                List<XFile> files =
+                                    await pickImageGallery(ImageSource.gallery);
+                                for (var i in files) {
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
+                                  await FirestoreMethods()
+                                      .uploadImageMessageFromGalley(
+                                          File(i.path), widget.snap['uid']);
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                }
+                              },
                             ),
                             IconButton(
                               icon: const Icon(
                                 Icons.camera_alt_outlined,
                                 size: 28,
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                Uint8List file =
+                                    await pickImage(ImageSource.gallery);
+                                setState(() {
+                                  _file = file;
+                                  _isLoading = true;
+                                });
+                                FirestoreMethods().uploadImageMessage(
+                                    _file!, widget.snap['uid']);
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              },
                             ),
                           ],
-                        )
-                      : MaterialButton(
-                          onPressed: () {
-                            if (_messageController.text.isNotEmpty) {
-                              FirestoreMethods().sendMessage(
-                                  widget.snap['uid'], _messageController.text);
-                              setState(() {
-                                _messageController.text = "";
-                              });
-                            }
-                          },
-                          child: const Text(
-                            'Send',
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
-                ],
-              ),
-            )
-          ],
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                        onPressed: () {
+                          if (_messageController.text.isNotEmpty) {
+                            FirestoreMethods().sendMessage(widget.snap['uid'],
+                                _messageController.text, 'text');
+                            setState(() {
+                              _messageController.text = "";
+                            });
+                          }
+                        },
+                        minWidth: 0,
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.only(
+                            top: 10, bottom: 10, right: 5, left: 10),
+                        child: const Icon(
+                          Icons.send_rounded,
+                          color: Colors.blue,
+                          size: 28,
+                        ))
+                  ],
+                ),
+                if (_isShowEmoji)
+                  SizedBox(
+                    height: 300,
+                    child: EmojiPicker(
+                      textEditingController: _messageController,
+                      config: Config(
+                        bgColor: const Color.fromARGB(255, 39, 39, 39),
+                        columns: 8,
+                        indicatorColor: Colors.grey,
+                        iconColorSelected: Colors.grey,
+                        skinToneDialogBgColor: Colors.white,
+                        skinToneIndicatorColor: Colors.grey,
+                        enableSkinTones: true,
+                        emojiSizeMax: 32 * (Platform.isAndroid ? 1.30 : 1.0),
+                        tabIndicatorAnimDuration: kTabScrollDuration,
+                        noRecents: const Text(
+                          'No Recents',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 201, 200, 200)),
+                          textAlign: TextAlign.center,
+                        ), //
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          ),
         ),
       ),
     );

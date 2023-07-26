@@ -23,17 +23,6 @@ class _SearchScreenState extends State<SearchScreen> {
     _searchController.dispose();
   }
 
-  // getDoc() async {
-  //   await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .where('username', isEqualTo: _searchController.text)
-  //       .get();
-  // }
-
-  // getDoc1() async {
-  //   await FirebaseFirestore.instance.collection('posts').get();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +66,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     ? ListView.builder(
                         itemCount: (snapshot.data! as dynamic).docs.length,
                         itemBuilder: (context, index) {
-                          print("XXXX");
                           print((snapshot.data! as dynamic).docs[index]['uid']);
                           return InkWell(
                             onTap: () => Navigator.of(context).push(

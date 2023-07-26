@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -53,21 +54,42 @@ class _MessageCardState extends State<MessageCard> {
         ),
         Flexible(
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(widget.message.type == 'text' ? 12 : 0),
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 52, 37, 168),
               border: Border.all(color: const Color.fromARGB(255, 12, 40, 96)),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-                bottomLeft: Radius.circular(30),
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(30),
+                topRight: const Radius.circular(30),
+                bottomLeft: const Radius.circular(30),
+                bottomRight: widget.message.type != 'text'
+                    ? const Radius.circular(30)
+                    : const Radius.circular(0),
               ),
             ),
-            child: Text(
-              widget.message.msg,
-              style: const TextStyle(fontSize: 16, color: Colors.white),
-            ),
+            child: widget.message.type == 'text'
+                ? Text(
+                    widget.message.msg,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.message.msg,
+                      placeholder: (context, url) => const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.image,
+                        size: 70,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
           ),
         ),
       ],
@@ -84,21 +106,42 @@ class _MessageCardState extends State<MessageCard> {
       children: [
         Flexible(
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(widget.message.type == 'text' ? 12 : 2),
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             decoration: BoxDecoration(
               color: const Color.fromARGB(115, 66, 66, 66),
-              border: Border.all(color: Color.fromARGB(255, 44, 44, 44)),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+              border: Border.all(color: const Color.fromARGB(255, 44, 44, 44)),
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(30),
+                topRight: const Radius.circular(30),
+                bottomRight: const Radius.circular(30),
+                bottomLeft: widget.message.type != 'text'
+                    ? const Radius.circular(30)
+                    : const Radius.circular(0),
               ),
             ),
-            child: Text(
-              widget.message.msg,
-              style: const TextStyle(fontSize: 16, color: Colors.white),
-            ),
+            child: widget.message.type == 'text'
+                ? Text(
+                    widget.message.msg,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.message.msg,
+                      placeholder: (context, url) => const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.image,
+                        size: 70,
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
           ),
         ),
         Padding(

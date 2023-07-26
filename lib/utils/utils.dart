@@ -12,6 +12,18 @@ pickImage(ImageSource source) async {
   print('No image selected');
 }
 
+pickImageGallery(ImageSource source) async {
+  final ImagePicker picker = ImagePicker();
+
+  final List<XFile?> images = await picker.pickMultiImage(imageQuality: 70);
+
+  if (images.isNotEmpty) {
+    return images;
+  }
+
+  print('No image selected');
+}
+
 showSnackBar(String content, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

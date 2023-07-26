@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -167,14 +168,14 @@ class FirestoreMethods {
   }
 
   //MESSAGE
-  Future<void> sendMessage(String userChatId, String msg) async {
+  Future<void> sendMessage(String userChatId, String msg, String type) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
     final Message message = Message(
       toId: userChatId,
       fromId: AuthMethods().getUserId(),
       msg: msg,
       sentDate: time,
-      type: 'text',
+      type: type,
       readDate: '',
     );
 
@@ -197,5 +198,29 @@ class FirestoreMethods {
         .orderBy('sentDate', descending: true)
         .limit(1)
         .snapshots();
+  }
+
+  Future<void> uploadImageMessage(Uint8List file, String userChatId) async {
+    try {
+      String photoUrl = await StorageMethods().uploadImageMessageToStorage(
+          'messages', file, getConversation(userChatId));
+
+      await sendMessage(userChatId, photoUrl, 'image');
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> uploadImageMessageFromGalley(
+      File file, String userChatId) async {
+    try {
+      String photoUrl = await StorageMethods()
+          .uploadImageMessageFromGalleryToStorage(
+              'messages', file, getConversation(userChatId));
+
+      await sendMessage(userChatId, photoUrl, 'image');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
