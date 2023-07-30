@@ -101,4 +101,11 @@ class AuthMethods {
     });
     await _auth.signOut();
   }
+
+  Future<void> updateActiveStatus(bool isOnline) async {
+    _firebase.collection('users').doc(getUserId()).update({
+      'isOnline': isOnline,
+      'lastActive': DateTime.now(),
+    });
+  }
 }

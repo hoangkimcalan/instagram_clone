@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/user_chat.dart';
 import 'package:instagram_clone/models/user.dart' as model;
@@ -22,6 +26,25 @@ class _ChatScreensState extends State<ChatScreens> {
     // TODO: implement dispose
     super.dispose();
     _searchController.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      log('Message: $message');
+
+      if (FirebaseAuth.instance.currentUser != null) {
+        if (message.toString().contains('resume')) {
+          AuthMethods().updateActiveStatus(true);
+        }
+        if (message.toString().contains('pause')) {
+          AuthMethods().updateActiveStatus(false);
+        }
+      }
+      return Future.value(message);
+    });
   }
 
   @override

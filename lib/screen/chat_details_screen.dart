@@ -11,9 +11,11 @@ import 'package:instagram_clone/models/message.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screen/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:instagram_clone/utils/utils.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/message_card.dart';
 
@@ -254,46 +256,64 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   }
 
   Widget _appBar() {
-    return Row(
-      children: [
-        IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back,
-            )),
-        CircleAvatar(
-          backgroundImage: NetworkImage(widget.snap['photoUrl']),
-          radius: 20,
+    return InkWell(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ProfileScreen(
+            uid: widget.snap['uid'],
+          ),
         ),
-        const SizedBox(
-          width: 8,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.snap['username'],
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+      ),
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(
+                Icons.arrow_back,
+              )),
+          CircleAvatar(
+            backgroundImage: NetworkImage(widget.snap['photoUrl']),
+            radius: 20,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.snap['username'],
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            const Text(
-              'offline 2 minutes',
-              style: TextStyle(
-                fontSize: 13,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
+              const SizedBox(
+                height: 2,
               ),
-            )
-          ],
-        )
-      ],
+              (widget.snap['isOnline'] == true)
+                  ? const Text(
+                      'Online',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  : Text(
+                      'Last online on ${DateFormat.MMMMEEEEd().format(widget.snap['lastActive'].toDate())}',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+            ],
+          )
+        ],
+      ),
     );
   }
 }
