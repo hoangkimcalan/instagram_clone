@@ -10,8 +10,9 @@ class User {
   final List following;
   final bool isOnline;
   final DateTime lastActive;
+  late String pushToken;
 
-  const User({
+  User({
     required this.email,
     required this.uid,
     required this.photoUrl,
@@ -21,6 +22,7 @@ class User {
     required this.following,
     required this.isOnline,
     required this.lastActive,
+    required this.pushToken,
   });
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +35,7 @@ class User {
         'photoUrl': photoUrl,
         'isOnline': isOnline,
         'lastActive': lastActive,
+        'pushToken': pushToken,
       };
 
   static User fromSnap(DocumentSnapshot snap) {
@@ -51,6 +54,7 @@ class User {
       following: snapshot['following'],
       isOnline: snapshot['isOnline'],
       lastActive: lastActive,
+      pushToken: snapshot['pushToken'].toString(),
     );
   }
 }

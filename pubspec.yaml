@@ -34,11 +34,14 @@ dependencies:
   emoji_picker_flutter: ^1.6.1
   firebase_auth: ^4.6.3
   firebase_core: ^2.14.0
+  firebase_messaging: ^14.6.5
   firebase_storage: ^11.2.3
   flutter:
     sdk: flutter
+  flutter_notification_channel: ^2.0.0
   flutter_staggered_grid_view: ^0.6.2
   flutter_svg: ^2.0.5
+  http: ^0.13.6
   image_picker: ^0.8.9
   intl: ^0.18.1
   provider: ^6.0.5

@@ -103,6 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               showDialog(
                                   context: context,
                                   builder: (_) => AlertDialog(
+                                        contentPadding: EdgeInsets.zero,
                                         backgroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -123,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       userData['photoUrl'],
                                                   placeholder: (context, url) =>
                                                       const Padding(
-                                                    padding: EdgeInsets.all(0),
+                                                    padding: EdgeInsets.all(2),
                                                     child:
                                                         CircularProgressIndicator(
                                                       strokeWidth: 2,
@@ -177,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             textColor: primaryColor,
                                             borderColor: Colors.grey,
                                             function: () async {
-                                              await AuthMethods()
+                                              await FirestoreMethods()
                                                   .updateActiveStatus(false);
 
                                               await AuthMethods().signOutUser(

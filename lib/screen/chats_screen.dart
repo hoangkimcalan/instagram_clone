@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/user_chat.dart';
 import 'package:instagram_clone/models/user.dart' as model;
@@ -32,15 +33,17 @@ class _ChatScreensState extends State<ChatScreens> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    FirestoreMethods().getSelfInfo();
+
     SystemChannels.lifecycle.setMessageHandler((message) {
       log('Message: $message');
 
       if (FirebaseAuth.instance.currentUser != null) {
         if (message.toString().contains('resume')) {
-          AuthMethods().updateActiveStatus(true);
+          FirestoreMethods().updateActiveStatus(true);
         }
         if (message.toString().contains('pause')) {
-          AuthMethods().updateActiveStatus(false);
+          FirestoreMethods().updateActiveStatus(false);
         }
       }
       return Future.value(message);

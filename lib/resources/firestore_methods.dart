@@ -1,17 +1,25 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart';
 import 'package:instagram_clone/models/post.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
-import 'package:instagram_clone/utils/global_variables.dart';
 import 'package:uuid/uuid.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/models/message.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  FirebaseMessaging fMessaging = FirebaseMessaging.instance;
+
+  static late model.User me;
 
   Future<String> uploadPost(
     String description,
@@ -182,7 +190,9 @@ class FirestoreMethods {
     await _firestore
         .collection('chats/${getConversation(userChatId)}/messages/')
         .doc(time)
-        .set(message.toJson());
+        .set(message.toJson())
+        .then((value) =>
+            sendPushNotification(userChatId, type == 'text' ? msg : 'image'));
   }
 
   Future<void> updateMessageReadStatus(Message message) async {
@@ -221,6 +231,70 @@ class FirestoreMethods {
       await sendMessage(userChatId, photoUrl, 'image');
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void> updateActiveStatus(bool isOnline) async {
+    _firestore.collection('users').doc(AuthMethods().getUserId()).update({
+      'isOnline': isOnline,
+      'lastActive': DateTime.now(),
+      'pushToken': me.pushToken,
+    });
+  }
+
+  Future<void> getFirebaseMessagingToken() async {
+    await fMessaging.requestPermission();
+
+    await fMessaging.getToken().then((token) {
+      if (token != null) {
+        me.pushToken = token;
+        print('Push Token: $token');
+      }
+    });
+  }
+
+  Future<void> getSelfInfo() async {
+    DocumentSnapshot snap = await _firestore
+        .collection('users')
+        .doc(AuthMethods().getUserId())
+        .get();
+    if (snap.exists) {
+      me = model.User.fromSnap(snap);
+      await getFirebaseMessagingToken();
+      log('My Data: ${snap.data()}');
+    }
+    FirestoreMethods().updateActiveStatus(true);
+  }
+
+  Future<void> sendPushNotification(String userId, String msg) async {
+    DocumentSnapshot userSnap =
+        await _firestore.collection('users').doc(userId).get();
+    try {
+      final body = {
+        "notification": {
+          "body": msg,
+          "title": (userSnap.data()! as dynamic)['username']
+        },
+        "priority": "high",
+        "data": {
+          "click_action": "FLUTTER_NOTIFICATION_CLICK",
+          "id": "1",
+          "status": "done"
+        },
+        "to": (userSnap.data()! as dynamic)['pushToken'],
+      };
+      var response =
+          await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+                HttpHeaders.authorizationHeader:
+                    'key=AAAA8UqfW4w:APA91bGbvx66bI66X-EyOmxsnlLhKVBSr4F9xEdcu6dJ4e6yV_vEiw017APtUx2ScIUb0BF5bhWbylNUC437z7vN6N1MitLozPHqckIOX0Pf776kdS8W7wVgST6UNg4rBwh-lQSq4ow2'
+              },
+              body: jsonEncode(body));
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
+    } catch (e) {
+      log('\nsendPushNotificationF: $e');
     }
   }
 }

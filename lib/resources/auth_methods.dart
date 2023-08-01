@@ -3,15 +3,13 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/models/message.dart';
 import 'package:instagram_clone/models/user.dart' as model;
-import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
-import 'package:provider/provider.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebase = FirebaseFirestore.instance;
+
   String getUserId() {
     return FirebaseAuth.instance.currentUser!.uid;
   }
@@ -58,6 +56,7 @@ class AuthMethods {
           photoUrl: photoUrl,
           isOnline: true,
           lastActive: DateTime.now(),
+          pushToken: '',
         );
 
         _firebase.collection('users').doc(cred.user!.uid).set(
@@ -100,12 +99,5 @@ class AuthMethods {
       'isOnline': false,
     });
     await _auth.signOut();
-  }
-
-  Future<void> updateActiveStatus(bool isOnline) async {
-    _firebase.collection('users').doc(getUserId()).update({
-      'isOnline': isOnline,
-      'lastActive': DateTime.now(),
-    });
   }
 }
