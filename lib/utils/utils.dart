@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -9,7 +11,7 @@ pickImage(ImageSource source) async {
   if (_file != null) {
     return await _file.readAsBytes();
   }
-  print('No image selected');
+  log('No image selected');
 }
 
 pickImageGallery(ImageSource source) async {
@@ -21,7 +23,7 @@ pickImageGallery(ImageSource source) async {
     return images;
   }
 
-  print('No image selected');
+  log('No image selected');
 }
 
 showSnackBar(String content, BuildContext context) {

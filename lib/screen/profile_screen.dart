@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,8 +37,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getData() async {
-    print("____");
-    print(widget.uid);
+    log("____");
+    log(widget.uid);
     setState(() {
       isLoading = true;
       uid = widget.uid;
@@ -184,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               await AuthMethods().signOutUser(
                                                   FirebaseAuth.instance
                                                       .currentUser!.uid);
-                                              print(widget.uid);
+                                              log(widget.uid);
                                               setState(() {
                                                 uid = "";
                                               });

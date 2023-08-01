@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       _isLoading = true;
     });
-    print(_passwordController.text);
+    log(_passwordController.text);
 
     String res = await AuthMethods().signUpUser(
       email: _emailController.text,

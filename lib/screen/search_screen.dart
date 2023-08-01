@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -66,7 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ? ListView.builder(
                         itemCount: (snapshot.data! as dynamic).docs.length,
                         itemBuilder: (context, index) {
-                          print((snapshot.data! as dynamic).docs[index]['uid']);
+                          log((snapshot.data! as dynamic).docs[index]['uid']);
                           return InkWell(
                             onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(

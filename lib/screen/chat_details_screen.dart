@@ -1,19 +1,14 @@
+import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/models/message.dart';
-import 'package:instagram_clone/models/user.dart' as model;
-import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/screen/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:flutter/foundation.dart' as foundation;
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:intl/intl.dart';
 
@@ -64,7 +59,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                     stream:
                         FirestoreMethods().getAllMessages(widget.snap['uid']),
                     builder: (context, snapshot) {
-                      if (snapshot.hasError) print('error');
+                      if (snapshot.hasError) log('error');
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(),

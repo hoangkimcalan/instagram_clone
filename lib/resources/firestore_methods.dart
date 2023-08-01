@@ -68,7 +68,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -95,7 +95,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -119,10 +119,10 @@ class FirestoreMethods {
           'likes': []
         });
       } else {
-        print('Text is empty');
+        log('Text is empty');
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -130,7 +130,7 @@ class FirestoreMethods {
     try {
       await _firestore.collection('posts').doc(postId).delete();
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -158,7 +158,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -191,8 +191,8 @@ class FirestoreMethods {
         .collection('chats/${getConversation(userChatId)}/messages/')
         .doc(time)
         .set(message.toJson())
-        .then((value) =>
-            sendPushNotification(userChatId, type == 'text' ? msg : 'image'));
+        .then((value) => sendPushNotificationMessage(
+            userChatId, type == 'text' ? msg : 'sent image'));
   }
 
   Future<void> updateMessageReadStatus(Message message) async {
@@ -217,7 +217,7 @@ class FirestoreMethods {
 
       await sendMessage(userChatId, photoUrl, 'image');
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -230,7 +230,7 @@ class FirestoreMethods {
 
       await sendMessage(userChatId, photoUrl, 'image');
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
   }
 
@@ -248,7 +248,7 @@ class FirestoreMethods {
     await fMessaging.getToken().then((token) {
       if (token != null) {
         me.pushToken = token;
-        print('Push Token: $token');
+        log('Push Token: $token');
       }
     });
 
@@ -274,7 +274,40 @@ class FirestoreMethods {
     FirestoreMethods().updateActiveStatus(true);
   }
 
-  Future<void> sendPushNotification(String userId, String msg) async {
+  Future<void> sendPushNotificationMessage(String userId, String msg) async {
+    DocumentSnapshot userSnap =
+        await _firestore.collection('users').doc(userId).get();
+    try {
+      final body = {
+        "notification": {
+          "body": msg,
+          "title": (userSnap.data()! as dynamic)['username'],
+          "android_channel_id": "chats",
+        },
+        "priority": "high",
+        "data": {
+          "click_action": "FLUTTER_NOTIFICATION_CLICK",
+          "id": (userSnap.data()! as dynamic)['uid'],
+          "status": "done"
+        },
+        "to": (userSnap.data()! as dynamic)['pushToken'],
+      };
+      var response =
+          await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+                HttpHeaders.authorizationHeader:
+                    'key=AAAA8UqfW4w:APA91bGbvx66bI66X-EyOmxsnlLhKVBSr4F9xEdcu6dJ4e6yV_vEiw017APtUx2ScIUb0BF5bhWbylNUC437z7vN6N1MitLozPHqckIOX0Pf776kdS8W7wVgST6UNg4rBwh-lQSq4ow2'
+              },
+              body: jsonEncode(body));
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
+    } catch (e) {
+      log('\nsendPushNotificationF: $e');
+    }
+  }
+
+  Future<void> sendPushNotificationComment(String userId, String msg) async {
     DocumentSnapshot userSnap =
         await _firestore.collection('users').doc(userId).get();
     try {
