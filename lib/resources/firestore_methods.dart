@@ -251,6 +251,14 @@ class FirestoreMethods {
         print('Push Token: $token');
       }
     });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      log('Got a message whilist in foreground');
+      log('Message data: $message');
+      if (message.notification != null) {
+        log('Message also contained a notification: ${message.notification}');
+      }
+    });
   }
 
   Future<void> getSelfInfo() async {
@@ -273,12 +281,13 @@ class FirestoreMethods {
       final body = {
         "notification": {
           "body": msg,
-          "title": (userSnap.data()! as dynamic)['username']
+          "title": (userSnap.data()! as dynamic)['username'],
+          "android_channel_id": "chats",
         },
         "priority": "high",
         "data": {
           "click_action": "FLUTTER_NOTIFICATION_CLICK",
-          "id": "1",
+          "id": (userSnap.data()! as dynamic)['uid'],
           "status": "done"
         },
         "to": (userSnap.data()! as dynamic)['pushToken'],
