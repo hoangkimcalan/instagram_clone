@@ -180,9 +180,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             textColor: primaryColor,
                                             borderColor: Colors.grey,
                                             function: () async {
-                                              await FirestoreMethods()
-                                                  .updateActiveStatus(false);
-
                                               await AuthMethods().signOutUser(
                                                   FirebaseAuth.instance
                                                       .currentUser!.uid);
@@ -199,6 +196,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   ),
                                                 );
                                               }
+                                              await FirestoreMethods()
+                                                  .updateActiveStatus(false);
                                             },
                                           )
                                         : isFollowing
