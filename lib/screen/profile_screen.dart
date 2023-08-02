@@ -200,8 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   .updateActiveStatus(false);
                                             },
                                           )
-                                        : isFollowing
-                                            ? FollowButton(
+                                        : isFollowing ? FollowButton(
                                                 text: 'Unfollow',
                                                 backgroundColor: Colors.white,
                                                 textColor: Colors.black,
