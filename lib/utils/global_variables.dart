@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/screen/add_post_screen.dart';
 import 'package:instagram_clone/screen/feed_screen.dart';
+import 'package:instagram_clone/screen/notification_screen.dart';
 import 'package:instagram_clone/screen/profile_screen.dart';
 import 'package:instagram_clone/screen/search_screen.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,6 @@ List<Widget> homeScreenItem = [
   const FeedScreen(),
   const SearchScreen(),
   const AddPostScreen(),
-  const Text('notif'),
-  ProfileScreen(uid: "NOT_OWN"),
+  const NotificationScreen(),
+  const ProfileScreen(uid: "NOT_OWN"),
 ];

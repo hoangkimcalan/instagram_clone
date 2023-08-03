@@ -87,9 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         : Scaffold(
             appBar: AppBar(
               backgroundColor: mobileBackgroundColor,
-              title: Text(
-                userData['username'],
-              ),
+              title: Text(userData['username']),
               centerTitle: false,
             ),
             body: ListView(
@@ -200,7 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   .updateActiveStatus(false);
                                             },
                                           )
-                                        : isFollowing ? FollowButton(
+                                        : isFollowing
+                                            ? FollowButton(
                                                 text: 'Unfollow',
                                                 backgroundColor: Colors.white,
                                                 textColor: Colors.black,
@@ -208,10 +207,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 function: () async {
                                                   await FirestoreMethods()
                                                       .followUser(
-                                                    FirebaseAuth.instance
-                                                        .currentUser!.uid,
-                                                    userData['uid'],
-                                                  );
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid,
+                                                          userData['uid']);
 
                                                   setState(() {
                                                     isFollowing = false;
