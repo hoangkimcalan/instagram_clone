@@ -97,6 +97,15 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     user.photoUrl,
                   );
 
+                  if (widget.snap['uid'] != user.uid) {
+                    await FirestoreMethods().pushNotificationReactPost(
+                      widget.snap['postId'],
+                      user.uid,
+                      widget.snap['uid'],
+                      false,
+                    );
+                  }
+
                   setState(() {
                     _commentController.text = "";
                   });

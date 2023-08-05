@@ -211,6 +211,15 @@ class _PostCardState extends State<PostCard> {
                 widget.snap['likes'],
               );
 
+              if (widget.snap['likes'].contains(user.getUser.uid) &&
+                  widget.snap['uid'] != user.getUser.uid) {
+                await FirestoreMethods().pushNotificationReactPost(
+                    widget.snap['postId'],
+                    user.getUser.uid,
+                    widget.snap['uid'],
+                    true);
+              }
+
               setState(() {
                 isLikeAnimating = true;
               });
@@ -261,6 +270,14 @@ class _PostCardState extends State<PostCard> {
                       user.getUser.uid,
                       widget.snap['likes'],
                     );
+                    if (widget.snap['likes'].contains(user.getUser.uid) &&
+                        widget.snap['uid'] != user.getUser.uid) {
+                      await FirestoreMethods().pushNotificationReactPost(
+                          widget.snap['postId'],
+                          user.getUser.uid,
+                          widget.snap['uid'],
+                          true);
+                    }
                   },
                   icon: widget.snap['likes'].contains(user.getUser.uid)
                       ? const Icon(

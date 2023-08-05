@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart';
+import 'package:instagram_clone/models/notification.dart';
 import 'package:instagram_clone/models/post.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
@@ -66,6 +67,29 @@ class FirestoreMethods {
           'likes': FieldValue.arrayUnion([uid])
         });
       }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> pushNotificationReactPost(
+      String postId, String guestId, String ownId, bool isLike) async {
+    try {
+      String notificationId = const Uuid().v1();
+
+      Notification notifi = Notification(
+        notificationId: notificationId,
+        postId: postId,
+        ownId: ownId,
+        guestId: guestId,
+        isLike: isLike,
+        readDate: '',
+      );
+
+      _firestore
+          .collection('notifications')
+          .doc(notificationId)
+          .set(notifi.toJson());
     } catch (e) {
       log(e.toString());
     }

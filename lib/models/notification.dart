@@ -1,23 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Notification {
+  final String notificationId;
   final String postId;
-  late String? commentId;
+  final String ownId;
   final String guestId;
   final bool isLike;
-  final DateTime readDate;
+  final String readDate;
 
   Notification({
+    required this.notificationId,
     required this.postId,
-    this.commentId,
+    required this.ownId,
     required this.guestId,
     required this.isLike,
     required this.readDate,
   });
 
   Map<String, dynamic> toJson() => {
+        "notificationId": notificationId,
         "postId": postId,
-        "commentId": commentId,
+        "ownId": ownId,
         "guestId": guestId,
         "isLike": isLike,
         "readDate": readDate,
@@ -27,8 +30,9 @@ class Notification {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return Notification(
+      notificationId: snapshot['notificationId'],
       postId: snapshot['postId'],
-      commentId: snapshot['commentId'],
+      ownId: snapshot['ownId'],
       guestId: snapshot['guestId'],
       isLike: snapshot['isLike'],
       readDate: snapshot['readDate'],
