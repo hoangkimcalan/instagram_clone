@@ -1,12 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/helper/my_date_utils.dart';
 import 'package:instagram_clone/models/message.dart';
-import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
-import 'package:intl/intl.dart';
 
 class MessageCard extends StatefulWidget {
   final Message message;

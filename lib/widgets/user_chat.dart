@@ -1,12 +1,9 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/helper/my_date_utils.dart';
 import 'package:instagram_clone/models/message.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/screen/chat_details_screen.dart';
-import 'package:instagram_clone/screen/chats_screen.dart';
-import 'package:instagram_clone/utils/colors.dart';
 
 class UserChat extends StatefulWidget {
   final snap;

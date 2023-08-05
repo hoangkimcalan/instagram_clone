@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:uuid/uuid.dart';
 

@@ -6,7 +6,6 @@ import 'package:instagram_clone/screen/feed_screen.dart';
 import 'package:instagram_clone/screen/notification_screen.dart';
 import 'package:instagram_clone/screen/profile_screen.dart';
 import 'package:instagram_clone/screen/search_screen.dart';
-import 'package:provider/provider.dart';
 
 const webScreenSize = 600;
 
