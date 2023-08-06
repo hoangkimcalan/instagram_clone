@@ -35,12 +35,15 @@ class Post {
   static Post fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
+    Timestamp datePublishedTimestamp = snapshot["datePublished"];
+    DateTime datePublished = datePublishedTimestamp.toDate();
+
     return Post(
       description: snapshot["description"],
       uid: snapshot["uid"],
       username: snapshot["username"],
       postId: snapshot["postId"],
-      datePublished: snapshot["datePublished"],
+      datePublished: datePublished,
       postUrl: snapshot["postUrl"],
       profImage: snapshot["profImage"],
       likes: snapshot["likes"],

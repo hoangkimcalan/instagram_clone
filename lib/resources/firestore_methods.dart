@@ -72,18 +72,27 @@ class FirestoreMethods {
     }
   }
 
+  Future<Post> getUrlImagePost(String postId) async {
+    DocumentSnapshot snap =
+        await _firestore.collection('posts').doc(postId).get();
+
+    return Post.fromSnap(snap);
+  }
+
   Future<void> pushNotificationReactPost(
       String postId, String guestId, String ownId, bool isLike) async {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
     try {
       String notificationId = const Uuid().v1();
 
-      Notification notifi = Notification(
+      Notifications notifi = Notifications(
         notificationId: notificationId,
         postId: postId,
         ownId: ownId,
         guestId: guestId,
         isLike: isLike,
         readDate: '',
+        createdDate: time,
       );
 
       _firestore

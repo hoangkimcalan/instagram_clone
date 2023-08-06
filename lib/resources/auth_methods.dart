@@ -23,6 +23,13 @@ class AuthMethods {
     return model.User.fromSnap(snap);
   }
 
+  Future<model.User> getGuestUserDetails(String guestId) async {
+    DocumentSnapshot snap =
+        await _firebase.collection('users').doc(guestId).get();
+
+    return model.User.fromSnap(snap);
+  }
+
   Future<String> signUpUser({
     required String email,
     required String password,

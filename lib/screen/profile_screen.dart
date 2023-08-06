@@ -35,8 +35,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getData() async {
-    log("____");
-    log(widget.uid);
     setState(() {
       isLoading = true;
       uid = widget.uid;

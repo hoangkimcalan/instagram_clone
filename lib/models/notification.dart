@@ -1,41 +1,41 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+class Notifications {
+  late final String notificationId;
+  late final String postId;
+  late final String ownId;
+  late final String guestId;
+  late final bool isLike;
+  late final String readDate;
+  late final String createdDate;
 
-class Notification {
-  final String notificationId;
-  final String postId;
-  final String ownId;
-  final String guestId;
-  final bool isLike;
-  final String readDate;
-
-  Notification({
+  Notifications({
     required this.notificationId,
     required this.postId,
     required this.ownId,
     required this.guestId,
     required this.isLike,
     required this.readDate,
+    required this.createdDate,
   });
 
-  Map<String, dynamic> toJson() => {
-        "notificationId": notificationId,
-        "postId": postId,
-        "ownId": ownId,
-        "guestId": guestId,
-        "isLike": isLike,
-        "readDate": readDate,
-      };
+  Notifications.fromJson(Map<String, dynamic> json) {
+    notificationId = json['notificationId'].toString();
+    postId = json['postId'].toString();
+    ownId = json['ownId'].toString();
+    guestId = json['guestId'].toString();
+    isLike = json['isLike'] ?? false;
+    readDate = json['readDate'].toString();
+    createdDate = json['createdDate'].toString();
+  }
 
-  static Notification fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
-
-    return Notification(
-      notificationId: snapshot['notificationId'],
-      postId: snapshot['postId'],
-      ownId: snapshot['ownId'],
-      guestId: snapshot['guestId'],
-      isLike: snapshot['isLike'],
-      readDate: snapshot['readDate'],
-    );
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['notificationId'] = notificationId;
+    data['postId'] = postId;
+    data['ownId'] = ownId;
+    data['guestId'] = guestId;
+    data['isLike'] = isLike;
+    data['readDate'] = readDate;
+    data['createdDate'] = createdDate;
+    return data;
   }
 }
