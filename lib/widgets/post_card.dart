@@ -295,9 +295,7 @@ class _PostCardState extends State<PostCard> {
                     snap: widget.snap,
                   ),
                 )),
-                icon: const Icon(
-                  Icons.comment_outlined,
-                ),
+                icon: const Icon(Icons.comment_outlined),
               ),
               IconButton(
                 onPressed: () {},
@@ -330,9 +328,12 @@ class _PostCardState extends State<PostCard> {
                   style: Theme.of(context).textTheme.subtitle2!.copyWith(
                         fontWeight: FontWeight.w800,
                       ),
-                  child: Text(
-                    '${widget.snap['likes'].length} likes',
-                    style: Theme.of(context).textTheme.bodyText2,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Text(
+                      '${widget.snap['likes'].length} likes',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
                 ),
                 Container(

@@ -65,13 +65,16 @@ class _NotificationCardState extends State<NotificationCard> {
           }
 
           return InkWell(
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => PostDetailScreen(
-                  snap: postDetails,
+            onTap: () {
+              FirestoreMethods()
+                  .updateStatusReadNotification(widget.snap['notificationId']);
+
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => PostDetailScreen(snap: postDetails),
                 ),
-              ),
-            ),
+              );
+            },
             child: ListTile(
               leading: CircleAvatar(
                 backgroundImage:
@@ -80,6 +83,11 @@ class _NotificationCardState extends State<NotificationCard> {
               ),
               title: Text(
                 '${snapshot.data?.docs[0].data()['username']} đã ${widget.snap['isLike'] ? 'thích một bài viết của bạn' : 'bình luận về bài viết của bạn'}',
+                style: TextStyle(
+                  fontWeight: widget.snap['readDate'].isNotEmpty
+                      ? FontWeight.normal
+                      : FontWeight.w700,
+                ),
               ),
               subtitle: Text(
                 MyDateUtil.getFormattedTime(

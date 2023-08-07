@@ -104,6 +104,13 @@ class FirestoreMethods {
     }
   }
 
+  Future<void> updateStatusReadNotification(String notificationId) async {
+    await _firestore
+        .collection('notifications')
+        .doc(notificationId)
+        .update({'readDate': DateTime.now().millisecondsSinceEpoch.toString()});
+  }
+
   Future<void> likeComment(
       String postId, String commentId, String uid, List likes) async {
     try {
