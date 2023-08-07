@@ -72,11 +72,11 @@ class FirestoreMethods {
     }
   }
 
-  Future<Post> getUrlImagePost(String postId) async {
+  getUrlImagePost(String postId) async {
     DocumentSnapshot snap =
         await _firestore.collection('posts').doc(postId).get();
 
-    return Post.fromSnap(snap);
+    return snap;
   }
 
   Future<void> pushNotificationReactPost(
