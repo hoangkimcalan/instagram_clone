@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/screen/comments_screen.dart';
+import 'package:instagram_clone/screen/like_details_screen.dart';
 import 'package:instagram_clone/screen/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
@@ -329,7 +330,14 @@ class _PostCardState extends State<PostCard> {
                         fontWeight: FontWeight.w800,
                       ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LikeDetailsScreen(snap: widget.snap['likes']),
+                        ),
+                      );
+                    },
                     child: Text(
                       '${widget.snap['likes'].length} likes',
                       style: Theme.of(context).textTheme.bodyText2,
