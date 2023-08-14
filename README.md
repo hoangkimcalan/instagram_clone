@@ -203,7 +203,7 @@ Run without debug - Ctrl + F5
 
 This project made and power by HoangKimCa.
 <br />
-<a href="https://github.com/hoangkimcalan"><img src="https://avatars.githubusercontent.com/u/34814759?v=4" width="150" height="150" /></a>
+<a href="https://github.com/hoangkimcalan"><img src="https://avatars.githubusercontent.com/u/34814759?v=4" width="200" height="200" /></a>
 
 
 ## Show your support
