@@ -9,10 +9,6 @@ import 'package:instagram_clone/screen/search_screen.dart';
 
 const webScreenSize = 600;
 
-Future<String> getUid() async {
-  return await FirebaseAuth.instance.currentUser!.uid;
-}
-
 List<Widget> homeScreenItem = [
   const FeedScreen(),
   const SearchScreen(),
