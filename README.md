@@ -152,9 +152,6 @@ This project made and power by HoangKimCa.
 <br />
 <a href="https://github.com/hoangkimcalan"><img src="https://avatars.githubusercontent.com/u/34814759?v=4" /></a>
 
-### Individuals
-
-<a href="https://github.com/hoangkimcalan"><img src="https://avatars.githubusercontent.com/u/34814759?v=4" /></a>
 
 ## Show your support
 
