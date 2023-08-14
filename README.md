@@ -9,7 +9,7 @@
   </a>
 </p>
 
-> CLI that generates beautiful README.md files.<br /> `readme-md-generator` will suggest you default answers by reading your `package.json` and `git` configuration.
+> CLI that generates beautiful README.md files.<br /> `readme-md-generator` will suggest you default answers by reading your `pubspec.yaml` and `git` configuration.
 
 ## ✨ Demo
 
