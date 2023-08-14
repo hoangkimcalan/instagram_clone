@@ -126,22 +126,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 }
-```
-
-## 🚀 Usage
-
-
-Just run the following command at the root of your project and answer questions:
-
-```sh
-flutter pub get
-```
-
-Or use default values for all questions (`-y`):
-
-```sh
-Flutter run Or use in IDE:
-Run without debug - Ctrl + F5
 
 ```
 ## Getting started
@@ -201,12 +185,25 @@ Double check install instructions for both
    - Firestore Plugin
      -  https://pub.dartlang.org/packages/cloud_firestore
 
+## 🚀 Usage
+
+
+Just run the following command at the root of your project and answer questions:
+
+```sh
+flutter pub get
+flutter run
+```
+
+Or use default values for all questions (`-y`):
+Flutter run Or use in IDE
+Run without debug - Ctrl + F5
 
 ## Code Contributors
 
 This project made and power by HoangKimCa.
 <br />
-<a href="https://github.com/hoangkimcalan"><img src="https://avatars.githubusercontent.com/u/34814759?v=4" /></a>
+<a href="https://github.com/hoangkimcalan"><img src="https://avatars.githubusercontent.com/u/34814759?v=4" width="150" height="150" /></a>
 
 
 ## Show your support
