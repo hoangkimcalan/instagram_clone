@@ -4,13 +4,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/helper/my_date_utils.dart';
-import 'package:instagram_clone/models/notification.dart';
-import 'package:instagram_clone/models/post.dart';
 import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/screen/post_detail_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:instagram_clone/widgets/post_card.dart';
 
 class NotificationCard extends StatefulWidget {
   final snap;
