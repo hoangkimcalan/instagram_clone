@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screen/edit_profile_screen.dart';
 import 'package:instagram_clone/screen/login_screen.dart';
 import 'package:instagram_clone/screen/post_detail_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
@@ -86,6 +87,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundColor: mobileBackgroundColor,
               title: Text(userData['username']),
               centerTitle: false,
+              actions: [
+                userData['uid'] == FirebaseAuth.instance.currentUser!.uid
+                    ? IconButton(
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            backgroundColor: mobileBackgroundColor,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SizedBox(
+                                height: 80,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        InkWell(
+                                          onTap: () async {
+                                            await AuthMethods().signOutUser(
+                                                FirebaseAuth
+                                                    .instance.currentUser!.uid);
+                                            log(widget.uid);
+                                            setState(() {
+                                              uid = "";
+                                            });
+                                            if (context.mounted) {
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginScreen(),
+                                                ),
+                                              );
+                                            }
+                                            await FirestoreMethods()
+                                                .updateActiveStatus(false);
+                                          },
+                                          child: Column(
+                                            children: const [
+                                              Icon(Icons.login),
+                                              Text(
+                                                'Sign out',
+                                                style: TextStyle(fontSize: 16),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.more_vert),
+                      )
+                    : const Text('')
+              ],
             ),
             body: ListView(
               children: [
@@ -169,30 +231,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             widget.uid ==
                                                 AuthMethods().getUserId())
                                         ? FollowButton(
-                                            text: 'Sign Out',
+                                            text: 'Edit profile',
                                             backgroundColor:
                                                 mobileBackgroundColor,
                                             textColor: primaryColor,
                                             borderColor: Colors.grey,
-                                            function: () async {
-                                              await AuthMethods().signOutUser(
-                                                  FirebaseAuth.instance
-                                                      .currentUser!.uid);
-                                              log(widget.uid);
-                                              setState(() {
-                                                uid = "";
-                                              });
-                                              if (context.mounted) {
-                                                Navigator.of(context)
-                                                    .pushReplacement(
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const LoginScreen(),
+                                            function: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditProfileScreen(
+                                                    snap: userData['uid'],
                                                   ),
-                                                );
-                                              }
-                                              await FirestoreMethods()
-                                                  .updateActiveStatus(false);
+                                                ),
+                                              );
                                             },
                                           )
                                         : isFollowing

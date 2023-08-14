@@ -17,7 +17,6 @@ class ChatScreens extends StatefulWidget {
 }
 
 class _ChatScreensState extends State<ChatScreens> {
-  final List<model.User> _searchList = [];
   bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
 

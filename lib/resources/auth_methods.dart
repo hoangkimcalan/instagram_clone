@@ -79,6 +79,27 @@ class AuthMethods {
     return res;
   }
 
+  Future<String> submitEditProfile(
+      String username, String bio, Uint8List file) async {
+    String res = "Some error occurred";
+
+    try {
+      String photoUrl = await StorageMethods()
+          .uploadImageToStorage('profilePics', file, false);
+
+      _firebase.collection('users').doc(AuthMethods().getUserId()).update({
+        'username': username,
+        'bio': bio,
+        'photoUrl': photoUrl,
+      });
+      res = 'success';
+    } catch (e) {
+      return e.toString();
+    }
+
+    return res;
+  }
+
   Future<String> loginUser({
     required String email,
     required String password,
