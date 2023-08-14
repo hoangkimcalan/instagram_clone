@@ -1,20 +1,14 @@
-<h1 align="center">Welcome to readme-md-generator 👋</h1>
+<h1 align="center">Welcome to instagram_clone 👋</h1>
 <p align="center">
-  <img src="https://img.shields.io/npm/v/readme-md-generator.svg?orange=blue" />
-  <a href="https://www.npmjs.com/package/readme-md-generator">
-    <img alt="downloads" src="https://img.shields.io/npm/dm/readme-md-generator.svg?color=blue" target="_blank" />
-  </a>
-  <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" target="_blank" />
-  </a>
-  <a href="https://codecov.io/gh/kefranabg/readme-md-generator">
-    <img src="https://codecov.io/gh/kefranabg/readme-md-generator/branch/master/graph/badge.svg" />
+  <img src="https://img.shields.io/badge/flutter_dart-version_3.10.6-blue?link=https%3A%2F%2Fflutter.dev%2F" />
+  <a href="https://firebase.google.com/">
+    <img src="https://img.shields.io/badge/firebase-version_10.1.0-blue?link=https%3A%2F%2Fflutter.dev%2F" />
   </a>
   <a href="https://github.com/frinyvonnick/gitmoji-changelog">
     <img src="https://img.shields.io/badge/changelog-gitmoji-brightgreen.svg" alt="gitmoji-changelog">
   </a>
-  <a href="https://twitter.com/FranckAbgrall">
-    <img alt="Twitter: FranckAbgrall" src="https://img.shields.io/twitter/follow/FranckAbgrall.svg?style=social" target="_blank" />
+  <a href="https://www.facebook.com/QuynC49">
+    <img alt="Facebook: Cả Hoàng Kim" src="https://img.shields.io/badge/Ca_Hoang_Kim-Face_book?link=https%3A%2F%2Fwww.facebook.com%2FQuynC49" target="_blank" />
   </a>
 </p>
 
@@ -22,10 +16,10 @@
 
 ## ✨ Demo
 
-`readme-md-generator` is able to read your environment (package.json, git config...) to suggest you default answers during the `README.md` creation process:
+`instagram-clone` is an app like instagram real has features: upload post, comment, chating, selfie, short clip and view many images to see beautiful girl 😁
 
 <p align="center">
-  <img width="700" align="center" src="https://user-images.githubusercontent.com/9840435/60266022-72a82400-98e7-11e9-9958-f9004c2f97e1.gif" alt="demo"/>
+  <img width="300" height="700" align="center" src="https://im5.ezgif.com/tmp/ezgif-5-998f1efbb4.gif" alt="demo"/>
 </p>
 
 Generated `README.md`:
