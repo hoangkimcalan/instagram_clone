@@ -1,10 +1,12 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
-import 'package:instagram_clone/screen/profile_screen.dart';
+import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/responsive/mobile_screen_layout.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 
@@ -40,6 +42,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void submitForm() async {
+    _image ??=
+        await FirestoreMethods().convertUrlToUint8List(photoProfileEditing);
     setState(() {
       _isLoading = true;
     });
@@ -50,17 +54,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() {
       _isLoading = false;
     });
-
     if (res != 'success') {
       showSnackBar(res, context);
-      // ignore: use_build_context_synchronously
     } else {
-      Navigator.of(context).pop();
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ProfileScreen(
-            uid: AuthMethods().getUserId(),
-          ),
+          builder: (context) => const MobilecreenLayout(),
         ),
       );
     }

@@ -378,4 +378,14 @@ class FirestoreMethods {
       log('\nsendPushNotificationF: $e');
     }
   }
+
+  Future<Uint8List> convertUrlToUint8List(String imageUrl) async {
+    var response = await get(Uri.parse(imageUrl));
+
+    if (response.statusCode == 200) {
+      return Uint8List.fromList(response.bodyBytes);
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
 }

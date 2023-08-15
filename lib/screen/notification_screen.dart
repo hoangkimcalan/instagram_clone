@@ -33,6 +33,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             .collection('notifications')
             .where('ownId', isEqualTo: AuthMethods().getUserId())
             .orderBy('createdDate')
+            .limit(11)
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -44,7 +45,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
           return ListView.builder(
             itemCount: (snapshot.data! as dynamic).docs.length,
-            reverse: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => Container(
               margin: EdgeInsets.symmetric(
