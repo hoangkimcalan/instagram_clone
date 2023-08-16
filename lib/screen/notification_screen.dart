@@ -21,10 +21,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         backgroundColor: mobileBackgroundColor,
         title: const Text(
           'Thông báo',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
         ),
         centerTitle: false,
       ),
@@ -38,9 +35,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           return ListView.builder(
@@ -51,9 +46,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 horizontal: width > webScreenSize ? width * 0.3 : 0,
                 vertical: width > webScreenSize ? 15 : 0,
               ),
-              child: NotificationCard(
-                snap: snapshot.data!.docs[index].data(),
-              ),
+              child: NotificationCard(snap: snapshot.data!.docs[index].data()),
             ),
           );
         },

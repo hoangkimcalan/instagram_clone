@@ -40,10 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
           decoration: const InputDecoration(
             labelText: 'Search for a user...',
             labelStyle: TextStyle(
-              color: Colors.blue,
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-            ),
+                color: Colors.blue, fontSize: 22, fontWeight: FontWeight.w700),
           ),
           onFieldSubmitted: (String _) {
             setState(() {
@@ -97,14 +94,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           padding: const EdgeInsets.all(16),
                           child: Column(
                             children: [
-                              Image.asset('assets/notfound.png',
-                                  color: Colors.white),
+                              Image.asset(
+                                'assets/notfound.png',
+                                color: Colors.white,
+                              ),
                               const Text(
                                 'Not found',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.grey,
-                                ),
+                                style:
+                                    TextStyle(fontSize: 24, color: Colors.grey),
                               )
                             ],
                           ),
@@ -120,9 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 return MasonryGridView.count(

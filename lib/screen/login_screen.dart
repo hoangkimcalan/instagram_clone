@@ -70,9 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 32,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,18 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: primaryColor,
                 height: 64,
               ),
-              const SizedBox(
-                height: 64,
-              ),
+              const SizedBox(height: 64),
               // text field input for email
               TextFieldInput(
                 hintText: 'Enter your email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               // text field input for password
               TextFieldInput(
                 hintText: 'Enter your password',
@@ -104,9 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textEditingController: _passwordController,
                 isPass: true,
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               // button login
               InkWell(
                 onTap: loginUser,
@@ -124,35 +116,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: _isLoading
                       ? const Center(
-                          child: CircularProgressIndicator(
-                            color: primaryColor,
-                          ),
+                          child: CircularProgressIndicator(color: primaryColor),
                         )
                       : const Text('Log in'),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               Flexible(flex: 2, child: Container()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text("Don't have account?"),
                   ),
-                  const SizedBox(
-                    width: 4,
-                  ),
+                  const SizedBox(width: 4),
                   GestureDetector(
                     onTap: navigateToSignup,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
                         "Sign up.",
                         style: TextStyle(

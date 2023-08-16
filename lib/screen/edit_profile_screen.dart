@@ -81,10 +81,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         actions: [
           IconButton(
             onPressed: submitForm,
-            icon: const Icon(
-              Icons.check,
-              color: blueColor,
-            ),
+            icon: const Icon(Icons.check, color: blueColor),
           ),
         ],
       ),
@@ -108,10 +105,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           }
 
           return Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 32,
-              vertical: 32,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
             width: double.infinity,
             child: SingleChildScrollView(
               reverse: true,
@@ -138,16 +132,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         left: 80,
                         child: IconButton(
                           onPressed: selectImage,
-                          icon: const Icon(
-                            Icons.add_a_photo,
-                          ),
+                          icon: const Icon(Icons.add_a_photo),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   TextFormField(
                     controller: _usernameController,
                     keyboardType: TextInputType.multiline,
@@ -158,7 +148,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       hintText: snapshot.data!.docs[0].data()['username'],
                       label: const Text(
                         'Username',
@@ -166,9 +157,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                  const SizedBox(height: 24),
                   TextFormField(
                     controller: _bioController,
                     keyboardType: TextInputType.multiline,
@@ -180,10 +169,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12)),
                       hintText: snapshot.data!.docs[0].data()['bio'],
-                      label: const Text(
-                        'bio',
-                        style: TextStyle(fontSize: 20),
-                      ),
+                      label: const Text('bio', style: TextStyle(fontSize: 20)),
                     ),
                   ),
                 ],

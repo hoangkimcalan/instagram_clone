@@ -56,9 +56,7 @@ class _NotificationCardState extends State<NotificationCard> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           return InkWell(
@@ -100,9 +98,7 @@ class _NotificationCardState extends State<NotificationCard> {
                     imageUrl: postUrl,
                     placeholder: (context, url) => const Padding(
                       padding: EdgeInsets.all(8),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     ),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.image, size: 70),

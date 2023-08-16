@@ -101,7 +101,8 @@ class _ChatScreensState extends State<ChatScreens> {
                   });
                 },
                 icon: Icon(
-                    _isSearching ? Icons.clear_rounded : Icons.search_sharp),
+                  _isSearching ? Icons.clear_rounded : Icons.search_sharp,
+                ),
               ),
             ],
           ),
@@ -127,9 +128,7 @@ class _ChatScreensState extends State<ChatScreens> {
                 itemCount: (snapshot.data! as dynamic).docs.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return UserChat(
-                    snap: snapshot.data!.docs[index].data(),
-                  );
+                  return UserChat(snap: snapshot.data!.docs[index].data());
                 },
               );
             },

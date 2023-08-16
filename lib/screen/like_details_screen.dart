@@ -19,10 +19,7 @@ class _LikeDetailsScreenState extends State<LikeDetailsScreen> {
         backgroundColor: mobileBackgroundColor,
         title: const Text(
           'Lượt thích',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
         ),
         centerTitle: false,
       ),

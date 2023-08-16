@@ -28,9 +28,7 @@ class _LikeDetailCardState extends State<LikeDetailCard> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.connectionState == ConnectionState.active) {

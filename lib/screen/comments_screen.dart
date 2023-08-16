@@ -105,16 +105,13 @@ class _CommentsScreenState extends State<CommentsScreen> {
                       false,
                     );
                   }
-
                   setState(() {
                     _commentController.text = "";
                   });
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 8,
-                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   child: const Text(
                     'Post',
                     style: TextStyle(

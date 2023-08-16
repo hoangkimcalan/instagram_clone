@@ -32,19 +32,14 @@ class _MessageCardState extends State<MessageCard> {
               width: 16,
             ),
             if (widget.message.readDate.isNotEmpty)
-              const Icon(
-                Icons.done_all_rounded,
-                color: Colors.blue,
-              ),
+              const Icon(Icons.done_all_rounded, color: Colors.blue),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 MyDateUtil.getFormattedTime(
                     context: context, time: widget.message.sentDate),
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
+                style:
+                    const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
               ),
             ),
           ],
@@ -79,9 +74,7 @@ class _MessageCardState extends State<MessageCard> {
                         imageUrl: widget.message.msg,
                         placeholder: (context, url) => const Padding(
                           padding: EdgeInsets.all(8),
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
+                          child: CircularProgressIndicator(strokeWidth: 2),
                         ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.image, size: 70),
@@ -133,14 +126,10 @@ class _MessageCardState extends State<MessageCard> {
                         imageUrl: widget.message.msg,
                         placeholder: (context, url) => const Padding(
                           padding: EdgeInsets.all(8),
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
+                          child: CircularProgressIndicator(strokeWidth: 2),
                         ),
-                        errorWidget: (context, url, error) => const Icon(
-                          Icons.image,
-                          size: 70,
-                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.image, size: 70),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -152,10 +141,7 @@ class _MessageCardState extends State<MessageCard> {
           child: Text(
             MyDateUtil.getFormattedTime(
                 context: context, time: widget.message.sentDate),
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
           ),
         )
       ],

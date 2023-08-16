@@ -274,35 +274,27 @@ class _PostCardState extends State<PostCard> {
                     if (widget.snap['likes'].contains(user.getUser.uid) &&
                         widget.snap['uid'] != user.getUser.uid) {
                       await FirestoreMethods().pushNotificationReactPost(
-                          widget.snap['postId'],
-                          user.getUser.uid,
-                          widget.snap['uid'],
-                          true);
+                        widget.snap['postId'],
+                        user.getUser.uid,
+                        widget.snap['uid'],
+                        true,
+                      );
                     }
                   },
                   icon: widget.snap['likes'].contains(user.getUser.uid)
-                      ? const Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        )
-                      : const Icon(
-                          Icons.favorite_border,
-                        ),
+                      ? const Icon(Icons.favorite, color: Colors.red)
+                      : const Icon(Icons.favorite_border),
                 ),
               ),
               IconButton(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CommentsScreen(
-                    snap: widget.snap,
-                  ),
+                  builder: (context) => CommentsScreen(snap: widget.snap),
                 )),
                 icon: const Icon(Icons.comment_outlined),
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(
-                  Icons.send,
-                ),
+                icon: const Icon(Icons.send),
               ),
               Expanded(
                 child: Align(

@@ -36,9 +36,7 @@ class _UserChatState extends State<UserChat> {
           stream: FirestoreMethods().getLastMessage(widget.snap['uid']),
           builder: ((context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.connectionState == ConnectionState.active) {
               final data = snapshot.data?.docs;

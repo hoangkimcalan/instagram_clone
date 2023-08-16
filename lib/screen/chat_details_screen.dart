@@ -86,9 +86,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         return const Center(
                           child: Text(
                             'Say Hi! 👋',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
+                            style: TextStyle(fontSize: 20),
                           ),
                         );
                       }
@@ -101,9 +99,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     ),
                   ),
                 Row(
@@ -209,7 +205,11 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         minWidth: 0,
                         shape: const CircleBorder(),
                         padding: const EdgeInsets.only(
-                            top: 10, bottom: 10, right: 5, left: 10),
+                          top: 10,
+                          bottom: 10,
+                          right: 5,
+                          left: 10,
+                        ),
                         child: const Icon(
                           Icons.send_rounded,
                           color: Colors.blue,
@@ -254,25 +254,19 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     return InkWell(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ProfileScreen(
-            uid: widget.snap['uid'],
-          ),
+          builder: (context) => ProfileScreen(uid: widget.snap['uid']),
         ),
       ),
       child: Row(
         children: [
           IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back,
-              )),
+              icon: const Icon(Icons.arrow_back)),
           CircleAvatar(
             backgroundImage: NetworkImage(widget.snap['photoUrl']),
             radius: 20,
           ),
-          const SizedBox(
-            width: 8,
-          ),
+          const SizedBox(width: 8),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,9 +279,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(
-                height: 2,
-              ),
+              const SizedBox(height: 2),
               (widget.snap['isOnline'] == true)
                   ? const Text(
                       'Online',

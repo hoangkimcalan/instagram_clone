@@ -203,9 +203,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             },
                             child: CircleAvatar(
                               backgroundColor: Colors.grey,
-                              backgroundImage: NetworkImage(
-                                userData['photoUrl'],
-                              ),
+                              backgroundImage:
+                                  NetworkImage(userData['photoUrl']),
                               radius: 40,
                             ),
                           ),
@@ -294,24 +293,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(
-                          top: 15,
-                        ),
+                        padding: const EdgeInsets.only(top: 15),
                         child: Text(
                           userData['username'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.only(
-                          top: 1,
-                        ),
-                        child: Text(
-                          userData['bio'],
-                        ),
+                        padding: const EdgeInsets.only(top: 1),
+                        child: Text(userData['bio']),
                       ),
                     ],
                   ),
@@ -376,10 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Text(
           num.toString(),
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         Container(
           margin: const EdgeInsets.only(top: 4),

@@ -144,9 +144,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               children: [
                 _isLoading
                     ? const LinearProgressIndicator()
-                    : const Padding(
-                        padding: EdgeInsets.only(top: 0),
-                      ),
+                    : const Padding(padding: EdgeInsets.only(top: 0)),
                 const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

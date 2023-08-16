@@ -76,31 +76,6 @@ class _CommentCardState extends State<CommentCard> {
               ),
             ),
           ),
-          // Container(
-          //   padding: const EdgeInsets.all(8),
-          //   child: LikeAnimation(
-          //     isAnimating: widget.snap['likes'].contains(user.uid),
-          //     child: IconButton(
-          //       onPressed: () async {
-          //         await FirestoreMethods().likeComment(
-          //           widget.postId,
-          //           widget.snap['commentId'],
-          //           widget.userId,
-          //           widget.snap['likes'],
-          //         );
-          //       },
-          //       icon: widget.snap['likes']
-          //               .contains(widget.userId != null ? widget.userId : "")
-          //           ? const Icon(
-          //               Icons.favorite,
-          //               color: Colors.red,
-          //             )
-          //           : const Icon(
-          //               Icons.favorite_border,
-          //             ),
-          //     ),
-          //   ),
-          // ),
           LikeAnimation(
             isAnimating: widget.snap['likes'].contains(user.uid),
             child: IconButton(
@@ -113,13 +88,8 @@ class _CommentCardState extends State<CommentCard> {
                 );
               },
               icon: widget.snap['likes'].contains(user.uid)
-                  ? const Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                    )
-                  : const Icon(
-                      Icons.favorite_border,
-                    ),
+                  ? const Icon(Icons.favorite, color: Colors.red)
+                  : const Icon(Icons.favorite_border),
             ),
           ),
         ],

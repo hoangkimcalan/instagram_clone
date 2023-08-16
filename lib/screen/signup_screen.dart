@@ -80,9 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void navigateToLogin() {
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 
@@ -91,10 +89,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 32,
-            vertical: 32,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
           width: double.infinity,
           child: SingleChildScrollView(
             reverse: true,
@@ -110,9 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   color: primaryColor,
                   height: 64,
                 ),
-                const SizedBox(
-                  height: 64,
-                ),
+                const SizedBox(height: 64),
                 //cicular widget to accept and show
                 Stack(
                   children: [
@@ -132,34 +125,26 @@ class _SignupScreenState extends State<SignupScreen> {
                       left: 80,
                       child: IconButton(
                         onPressed: selectImage,
-                        icon: const Icon(
-                          Icons.add_a_photo,
-                        ),
+                        icon: const Icon(Icons.add_a_photo),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                const SizedBox(height: 24),
                 //text field input for username
                 TextFieldInput(
                   hintText: 'Enter your username',
                   textInputType: TextInputType.text,
                   textEditingController: _usernameController,
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                const SizedBox(height: 24),
                 // text field input for email
                 TextFieldInput(
                   hintText: 'Enter your email',
                   textInputType: TextInputType.emailAddress,
                   textEditingController: _emailController,
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                const SizedBox(height: 24),
                 // text field input for password
                 TextFieldInput(
                   hintText: 'Enter your password',
@@ -167,17 +152,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   textEditingController: _passwordController,
                   isPass: true,
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                const SizedBox(height: 24),
                 TextFieldInput(
                   hintText: 'Enter your bio',
                   textInputType: TextInputType.text,
                   textEditingController: _bioController,
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
+                const SizedBox(height: 24),
                 // button login
                 InkWell(
                   onTap: signUpUser,
@@ -187,49 +168,36 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: const ShapeDecoration(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4),
-                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
                       ),
                       color: blueColor,
                     ),
                     child: _isLoading
                         ? const Center(
-                            child: CircularProgressIndicator(
-                              color: primaryColor,
-                            ),
+                            child:
+                                CircularProgressIndicator(color: primaryColor),
                           )
                         : const Text('Sign up'),
                   ),
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
                 Flexible(flex: 2, child: Container()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text("Already have an account?"),
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    const SizedBox(width: 4),
                     GestureDetector(
                       onTap: navigateToLogin,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         child: const Text(
                           "Log in.",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
                     ),
