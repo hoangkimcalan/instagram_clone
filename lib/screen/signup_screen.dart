@@ -50,7 +50,6 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() {
       _isLoading = true;
     });
-    log(_passwordController.text);
 
     String res = await AuthMethods().signUpUser(
       email: _emailController.text,

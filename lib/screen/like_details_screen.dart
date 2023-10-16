@@ -13,7 +13,6 @@ class LikeDetailsScreen extends StatefulWidget {
 class _LikeDetailsScreenState extends State<LikeDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    print(widget.snap);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,

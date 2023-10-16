@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/models/message.dart';
@@ -195,8 +196,11 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                     MaterialButton(
                         onPressed: () {
                           if (_messageController.text.isNotEmpty) {
-                            FirestoreMethods().sendMessage(widget.snap['uid'],
-                                _messageController.text, 'text');
+                            FirestoreMethods().sendMessage(
+                              FirebaseAuth.instance.currentUser!.uid,
+                              _messageController.text,
+                              'text',
+                            );
                             setState(() {
                               _messageController.text = "";
                             });
